@@ -1,7 +1,5 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
-    width: 100vw;
-    height: 100vw;
     background-color: rgba(247, 195, 195, 0.966);
     justify-content: center;
     align-items: center;
@@ -27,7 +25,6 @@ body{
     
 }
 .strt_btn button{
-    
     border: none;
     border-radius: 3px;
     font-size: 16px; 
@@ -57,7 +54,7 @@ body{
     margin-left: 50%;
     padding: 20px;
     border-radius: 5px;
-    max-width: 700px;
+    max-width: 300px;
     background-color: rgb(252, 237, 239);
     margin: 100px auto 0;
     
@@ -66,31 +63,20 @@ body{
 
 #answers{
     display: grid;
-    grid-template-columns: repeat(2,auto);
+    max-width: 250px;
     gap: 30px;
     margin-top: 20px ;
     margin-bottom: 20px;
-    
-    
+    margin-left: 20px;
 
 }
-ul{
-    text-decoration: none;
-    
 
-}
-.opt1{
-    margin-top: 6px;
-    
-}
+
 #controls{
     display: block;
     
 }
-#right{
-    display: flex;
-    padding: 10px;
-}
+
 
 .btn{
     border: none;
@@ -135,4 +121,5 @@ ul{
     background: rgb(233, 46, 46);
     opacity: 0.8;
 }
+
 
