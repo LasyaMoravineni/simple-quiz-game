@@ -50,13 +50,15 @@ body{
 }
 
 #container{
-    margin-top: 50%;
-    margin-left: 50%;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 20px;
     border-radius: 5px;
     max-width: 300px;
     background-color: rgb(252, 237, 239);
-    margin: 100px auto 0;
     
     
 }
@@ -65,9 +67,7 @@ body{
     display: grid;
     max-width: 250px;
     gap: 30px;
-    margin-top: 20px ;
-    margin-bottom: 20px;
-    margin-left: 20px;
+    margin: 20px ;
 
 }
 
