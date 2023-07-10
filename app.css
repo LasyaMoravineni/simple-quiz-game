@@ -1,8 +1,10 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
     background-color: rgba(247, 195, 195, 0.966);
-    justify-content: center;
-    align-items: center;
+    
+    margin: 0;
+    padding: 0;
+
 }
 
 #greeting{
@@ -24,6 +26,11 @@ body{
     align-items: center;
     
 }
+.btn{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
 .strt_btn button{
     border: none;
     border-radius: 3px;
@@ -34,7 +41,7 @@ body{
 
 }
 .strt_btn button:hover{
-    background-color: rgb(196, 104, 104);
+    background-color: rgb(204, 123, 123);
     transition: 0.6s;
     
 }
@@ -50,14 +57,15 @@ body{
 }
 
 #container{
-    
+   
+    display: flex;
+    align-items: center;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
     border-radius: 5px;
-    width: 300px;
     background-color: rgb(252, 237, 239);
     
     
@@ -65,12 +73,37 @@ body{
 
 #answers{
     display: grid;
-    max-width: 250px;
+    grid-template-columns: repeat(2,250px);
     gap: 30px;
     margin: 20px ;
 
 }
+@media(max-width:740px){
+    #gif-img,#gif-img2{
+        display: none;
+        width: 200px;
+    }
+    #container{
+        width: 300px;
+    }
+}
 
+
+@media(max-width:650px){
+    #answers{
+        display: flex;
+        flex-direction: column;
+       
+    }
+    #container{
+        width: 280px;
+    }
+}
+@media(max-width:470px){
+    #container{
+        width: 200px;
+    }
+}
 
 #controls{
     display: block;
@@ -84,7 +117,7 @@ body{
     padding: 20px;
     background-color: rgb(250, 205, 205);
     cursor: pointer;
-    box-shadow: 0 0.8px 3px 0.1px;
+    box-shadow: rgba(0, 0, 0, 0.24) 2px 3px 8px;;
 
 }
 
@@ -111,6 +144,18 @@ body{
     transition: 0.4s;
 
 }
+#gif-img, #gif-img2{
+    display: none;
+}
+
+.meme{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    
+
+}
 .correct{
     background: rgb(113, 211, 113);
     opacity: 0.8;
@@ -121,5 +166,4 @@ body{
     background: rgb(233, 46, 46);
     opacity: 0.8;
 }
-
 
