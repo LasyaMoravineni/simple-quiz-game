@@ -106,6 +106,8 @@ const questions=[
 const questionElement= document.getElementById("question");
 const answerButton= document.getElementById("answers");
 const nextbtn=document.getElementById("next");
+const gifimage=document.getElementById("gif-img");
+const gifimage2=document.getElementById("gif-img2");
 
 
 let currentQuesIndex=0;
@@ -159,6 +161,8 @@ function showQues(){
 
 function resetState(){
     nextbtn.style.display="none";
+    gifimage.style.display="none";
+    gifimage2.style.display="none";
     while(answerButton.firstChild){
         answerButton.removeChild(answerButton.firstChild);
     }
@@ -188,6 +192,14 @@ function selectAns(e){
 function showScore(){
     resetState();
     questionElement.innerHTML= `You scored ${score} out of ${questions.length}!`;
+    if(score==7 || score==8 || score==9 || score==10){
+        gifimage.style.display= "block";
+    }
+    else if(score==1 || score==2 || score==3 || score==4|| score==5|| score==6){
+        gifimage2.style.display= "block";
+        
+    }
+    
     nextbtn.innerHTML="Play Again";
     nextbtn.style.display= "block";
 
