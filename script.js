@@ -110,18 +110,27 @@ const gifimage=document.getElementById("gif-img");
 const gifimage2=document.getElementById("gif-img2");
 
 
+
 let currentQuesIndex=0;
 let score=0;
+let playerName = "";
 
 document.getElementById("container").style.display="none";
+document.getElementById("leaderboardBtn").style.display="none";
 
 function start(){
     document.getElementById("stbtn").onclick=function(){
+        playerName = document.getElementById("player_name").value; // Get the player's name
+        console.log(playerName)
+        if (playerName.trim() === "") {
+            alert("Please enter your name to start the quiz!");
+        } else {
         startQuiz();
         document.getElementById("container").style.display="block";
         document.getElementById("greeting").style.display="none";
+        document.getElementById("player_name").style.display = "none";
         document.getElementById("stbtn").style.display="none";
-
+        }
 
     }
 }
@@ -136,8 +145,8 @@ function startQuiz(){
     score=0;
     nextbtn.innerHTML="Next";
     showQues();
-
 }
+
 
 function showQues(){
     resetState();
@@ -159,14 +168,19 @@ function showQues(){
     });
 }
 
+
 function resetState(){
     nextbtn.style.display="none";
     gifimage.style.display="none";
     gifimage2.style.display="none";
+    document.getElementById("leaderboardBtn").style.display="none";
+
+
     while(answerButton.firstChild){
         answerButton.removeChild(answerButton.firstChild);
     }
 }
+
 
 function selectAns(e){
     const selectedBtn= e.target;
@@ -189,25 +203,91 @@ function selectAns(e){
 
     }
 
+
 function showScore(){
     resetState();
     questionElement.innerHTML= `You scored ${score} out of ${questions.length}!`;
-    if(score==7 || score==8 || score==9 || score==10){
+    if(score>=7){
         gifimage.style.display= "block";
     }
-    else if(score==1 || score==2 || score==3 || score==4|| score==5|| score==6){
+    else {
         gifimage2.style.display= "block";
         
     }
+    console.log(playerName + ":" + score);
+     // Send score to the server
+     fetch('http://localhost:3500/save-score', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ playerName, score })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Score saved successfully.");
+        } else {
+            console.error("Failed to save score. Status:", response.status);
+        }
+    })
+
+    .catch(error => {
+        console.error("Error saving score:", error);
+    });
     
     nextbtn.innerHTML="Play Again";
     nextbtn.style.display= "block";
+    document.getElementById("leaderboardBtn").style.display="block";
+
 
 }
 
 
+function displayScores() {
+    fetch('http://localhost:3500/scores')
+        .then(response => response.json())
+        .then(scores => {
+            const container = document.getElementById('container');
+            container.innerHTML = ''; // Clear existing content
 
-    function handleNextButton(){
+            //to create heading
+            const heading = document.createElement('h1');
+            heading.textContent = 'Scores';
+            heading.style.textAlign = 'center';
+            container.appendChild(heading);
+
+            //to create table
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Player Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${scores.map(score => `
+                        <tr>
+                            <td>${score.player_name}</td>
+                            <td>${score.score}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+            container.appendChild(table);
+        })
+        .catch(error => {
+            console.error("Error fetching scores:", error);
+        });
+}
+
+document.getElementById('leaderboardBtn').addEventListener('click', () => {
+    displayScores();
+});
+
+
+
+function handleNextButton(){
         currentQuesIndex++;
         if(currentQuesIndex<questions.length){
             showQues();
@@ -216,9 +296,9 @@ function showScore(){
             showScore();
         }
 
-    }
+}
 
-    nextbtn.addEventListener("click",()=>{
+nextbtn.addEventListener("click",()=>{
         if(currentQuesIndex<questions.length){
             handleNextButton();
         }
@@ -226,8 +306,4 @@ function showScore(){
             startQuiz();
         }
 
-    })
-
-
-
-  
+})
